@@ -4,6 +4,7 @@
 		"nodeVersion": "14.17.0"
 	},
 	"scripts": {
+		"start": "node server.js",
 		"dev": "parcel src/index.html",
 		"build": "parcel build src/index.html"
 	},
