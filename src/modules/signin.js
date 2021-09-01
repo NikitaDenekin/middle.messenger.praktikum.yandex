@@ -1,4 +1,3 @@
-// const Handlebars = require('handlebars')
 import Handlebars from 'handlebars/dist/handlebars'
 
 const source = `
@@ -67,6 +66,5 @@ const source = `
 </div>`
 
 const template = Handlebars.compile(source)
-
 
 export const signin = template()

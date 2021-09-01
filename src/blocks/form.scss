@@ -25,7 +25,7 @@ $font-color-title: #999;
 		width: 280px;
 		border: none;
 		outline: none;
-		border-bottom: 2px solid #f12711a8;
+		border-bottom: 2px solid $ui-elements-color-main;
 		box-sizing: border-box;
 		color: $font-color-main;
 		font-weight: 500;
@@ -38,7 +38,7 @@ $font-color-title: #999;
 		border: none;
 		outline: none;
 		border-radius: 8px;
-		background-color: #f12711c2;
+		background-color: $ui-elements-color-main;
 		font-weight: 500;
 		font-size: 13px;
 		line-height: 13px;
@@ -52,7 +52,7 @@ $font-color-title: #999;
 			margin: 47px 0 0 0;
 		}
 		&:hover {
-			background-color: #f12711ea;
+			background-color: $ui-elements-hover-color;
 		}
 		&:active {
 			transform: scale(0.95);

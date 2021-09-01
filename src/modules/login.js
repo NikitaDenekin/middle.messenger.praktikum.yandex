@@ -1,5 +1,4 @@
 import Handlebars from 'handlebars/dist/handlebars'
-// const Handlebars = require('handlebars')
 
 const source = `<div class="entry">
 <div class="entry__container">
