@@ -1,0 +1,159 @@
+import EventBus from './event-bus.js'
+import Handlebars from 'handlebars/dist/handlebars'
+import { v4 as uuidv4 } from 'uuid'
+
+export default class Block {
+	static EVENTS = {
+		INIT: 'init',
+		FLOW_CDM: 'flow:component-did-mount',
+		FLOW_CDU: 'flow:component-did-update',
+		FLOW_RENDER: 'flow:render',
+	}
+
+	_element = null
+	_meta = null
+	props: {
+		id: any
+		events?: any
+		tmpl?: string
+	}
+	eventBus: () => any
+	tmpl: any
+
+	constructor(tagName: string = 'div', props: object = {}) {
+		const eventBus = new EventBus()
+		this._meta = {
+			tagName,
+			props,
+		}
+
+		this.props = this._makePropsProxy(props)
+		this.tmpl = this.props.tmpl
+
+		// this.attributes = this.props.attributes || {}
+		// this.childs = this.props.childs || []
+
+		this.eventBus = () => eventBus
+
+		this._registerEvents(eventBus)
+		eventBus.emit(Block.EVENTS.INIT)
+	}
+
+	_registerEvents(eventBus) {
+		eventBus.on(Block.EVENTS.INIT, this.init.bind(this))
+		eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this))
+		eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this))
+		eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this))
+	}
+
+	_createResources() {
+		const { tagName } = this._meta
+		this._element = this._createDocumentElement(tagName)
+		// this._addAttributes()
+	}
+
+	// _addAttributes() {
+	// 	if (!Object.keys(this.attributes).length == 0) {
+	// 		const attributesArr = Object.entries(this.attributes)
+	// 		attributesArr.forEach(([key, value]) => {
+	// 			this._element.setAttribute(key, value)
+	// 		})
+	// 	}
+	// 	return
+	// }
+
+	init() {
+		this._createResources()
+		this.eventBus().emit(Block.EVENTS.FLOW_CDM)
+	}
+
+	_componentDidMount() {
+		this.componentDidMount()
+		this.eventBus().emit(Block.EVENTS.FLOW_RENDER)
+	}
+
+	componentDidMount() {}
+
+	_componentDidUpdate(oldProps, newProps) {
+		const response = this.componentDidUpdate(oldProps, newProps)
+		if (response) {
+			this.eventBus().emit(Block.EVENTS.FLOW_RENDER)
+		}
+		return
+	}
+
+	componentDidUpdate(oldProps, newProps) {
+		return true
+	}
+
+	setProps = nextProps => {
+		if (!nextProps) {
+			return
+		}
+
+		Object.assign(this.props, nextProps)
+	}
+
+	_addEvents() {
+		const { events = {} } = this.props
+		Object.keys(events).forEach(eventName => {
+			this._element.addEventListener(eventName, events[eventName])
+		})
+	}
+
+	getElement() {
+		return this._element
+	}
+
+	_render() {
+		// const block = this.render()
+		// this._element.innerHTML = block
+	}
+
+	render() {}
+
+	getContent() {
+		return this._element
+	}
+
+	_makePropsProxy(props) {
+		const self = this
+		const proxyProps = new Proxy(props, {
+			get(target, prop) {
+				if (prop[0] === '_') {
+					throw new Error('Нет прав')
+				}
+
+				const value = target[prop]
+				return typeof value === 'function' ? value.bind(target) : value
+			},
+			set(target, prop, value) {
+				if (prop[0] === '_') {
+					throw new Error('Нет прав')
+				}
+				const oldProps = Object.assign({ ...target })
+				target[prop] = value
+				self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target)
+				return true
+			},
+			deleteProperty(target, prop) {
+				throw new Error('Нет прав')
+			},
+		})
+
+		return proxyProps
+	}
+
+	_createDocumentElement(tagName) {
+		// Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
+		return document.createElement(tagName)
+	}
+
+	show() {
+		this._element.style.display = 'block'
+	}
+
+	hide() {
+		this._element.style.display = 'none'
+	}
+}

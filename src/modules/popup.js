@@ -32,38 +32,39 @@ const popupUser = `<div class="popup" id="{{popupId}}">
       </div>`
 
 export class Popup {
-	constructor(type, popupId, title, text, btnSelectText = '', btnAcceptTitle) {
-		this._data = {
-			popupId: popupId,
-			title: title,
-			text: text,
-			btnSelectText: btnSelectText,
-			btnAcceptTitle: btnAcceptTitle,
-		}
-		this._type = type
-	}
-	_addEventListeners() {
-		const popupEl = document.querySelector(`#${this._data.popupId}`)
-		popupEl.addEventListener('click', function (e) {
-			if (e.target.className === 'popup') {
-				popupEl.classList.add('popup-hidden')
-			}
-			return
-		})
-	}
-	renderPopup() {
-		const mainEl = document.querySelector('main')
-		let template
-		switch (this._type) {
-			case 'popupUser':
-				template = Handlebars.compile(popupUser)
-			case 'popupFileAdd':
-				template = Handlebars.compile(popupFileAdd)
-			default:
-				template = Handlebars.compile(popupUser)
-		}
-		const popup = template(this._data)
-		mainEl.insertAdjacentHTML('afterbegin', popup)
-		this._addEventListeners()
-	}
+  constructor(type, popupId, title, text, btnSelectText = '', btnAcceptTitle) {
+    this._data = {
+      popupId,
+      title,
+      text,
+      btnSelectText,
+      btnAcceptTitle,
+    }
+    this._type = type
+  }
+
+  _addEventListeners() {
+    const popupEl = document.querySelector(`#${this._data.popupId}`)
+    popupEl.addEventListener('click', (e) => {
+      if (e.target.className === 'popup') {
+        popupEl.classList.add('popup-hidden')
+      }
+    })
+  }
+
+  renderPopup() {
+    const mainEl = document.querySelector('main')
+    let template
+    switch (this._type) {
+      case 'popupUser':
+        template = Handlebars.compile(popupUser)
+      case 'popupFileAdd':
+        template = Handlebars.compile(popupFileAdd)
+      default:
+        template = Handlebars.compile(popupUser)
+    }
+    const popup = template(this._data)
+    mainEl.insertAdjacentHTML('afterbegin', popup)
+    this._addEventListeners()
+  }
 }

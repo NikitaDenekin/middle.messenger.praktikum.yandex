@@ -1,29 +1,26 @@
 import Handlebars from 'handlebars/dist/handlebars'
+import Block from '../utils/Block.ts'
+import { loginTmp } from '../templates/login.tmp.js'
+import { loginForm } from '../components/LoginForm.js'
 
-const source = `<div class="entry">
-<div class="entry__container">
-  <h2 class="entry__title">Вход</h2>
-  <form action="" class="form entry__form-signup">
-    <label for="" class="form__field">
-      <p class="form__input-title">Логин</p>
-      <input type="text" name="login" class="form__input entry__input" />
-      <span class="form__input-error"></span>
-    </label>
-    <label for="" class="form__field">
-      <p class="form__input-title">Пароль</p>
-      <input
-        type="text"
-        name="password"
-        class="form__input entry__input"
-      />
-      <span class="form__input-error"></span>
-    </label>
-    <button type="button" id="login-btn-login" class="form__btn form__btn-signup">Войти</button>
-  </form>
-  <a href="#" id="login-btn-signin" class="entry__btn">Нет аккаунта?</a>
-</div>
-</div>`
+// export default class Login extends Block {
+// 	constructor(props) {
+// 		super('div', props)
+// 	}
+// 	render() {
+// 		return Handlebars.compile(loginTmp)({ form: this.props.form.render() })
+// 	}
+// }
 
-const template = Handlebars.compile(source)
+// const login = new Login({
+// 	form: loginForm,
+// })
 
-export const login = template()
+// function render(query, block) {
+// 	const root = document.querySelector(query)
+
+// 	root.appendChild(block.getContent())
+// 	return root
+// }
+
+// render('.main', login)
