@@ -16,9 +16,31 @@ export default class Block {
 		id: any
 		events?: any
 		tmpl?: string
+		user?: string
+		classList?: string[]
+		regx?: any
+		fields?: any
+		onValidate?
+		link?: any
+		onRenderPage?: any
+		onSubmit?: any
+		form?: any
+		companions?
+		talkMassages?
+		profileBar?
+		inputSelector?
+		buttonBack?
+		buttonExit?
+		onExit?
+		buttonEdibInfo?
+		buttonEditPassword?
+		onEditInfo?
+		onEditPasssword?
+		// attributes?: Record<string, string>
 	}
 	eventBus: () => any
-	tmpl: any
+	tmpl?: string
+	classList: string[]
 
 	constructor(tagName: string = 'div', props: object = {}) {
 		const eventBus = new EventBus()
@@ -30,7 +52,6 @@ export default class Block {
 		this.props = this._makePropsProxy(props)
 		this.tmpl = this.props.tmpl
 
-		// this.attributes = this.props.attributes || {}
 		// this.childs = this.props.childs || []
 
 		this.eventBus = () => eventBus
@@ -53,7 +74,7 @@ export default class Block {
 	}
 
 	// _addAttributes() {
-	// 	if (!Object.keys(this.attributes).length == 0) {
+	// 	if (!Object.keys(this.attributes).length === 0) {
 	// 		const attributesArr = Object.entries(this.attributes)
 	// 		attributesArr.forEach(([key, value]) => {
 	// 			this._element.setAttribute(key, value)
@@ -75,16 +96,12 @@ export default class Block {
 	componentDidMount() {}
 
 	_componentDidUpdate(oldProps, newProps) {
-		const response = this.componentDidUpdate(oldProps, newProps)
-		if (response) {
-			this.eventBus().emit(Block.EVENTS.FLOW_RENDER)
-		}
-		return
+		this.eventBus().emit(Block.EVENTS.FLOW_RENDER)
 	}
 
-	componentDidUpdate(oldProps, newProps) {
-		return true
-	}
+	componentDidUpdate() {}
+
+	postRender() {}
 
 	setProps = nextProps => {
 		if (!nextProps) {
@@ -101,13 +118,29 @@ export default class Block {
 		})
 	}
 
+	_addClass() {
+		if (this.classList) {
+			this.classList.forEach(item => {
+				this._element.classList.add(item)
+			})
+		}
+		return
+	}
+
 	getElement() {
 		return this._element
 	}
 
 	_render() {
-		// const block = this.render()
-		// this._element.innerHTML = block
+		const prevElement = this._element
+		const block: any = this.render()
+		this._element = block.firstChild
+		if (prevElement.parentElement) {
+			prevElement.replaceWith(this._element)
+		}
+		this._addEvents()
+		this._addClass()
+		this.postRender()
 	}
 
 	render() {}

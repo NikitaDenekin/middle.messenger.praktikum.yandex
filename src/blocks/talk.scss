@@ -13,10 +13,13 @@
 	justify-content: flex-start;
 	align-items: center;
 	&__message {
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		margin: 10px 0 0 0;
 		padding: 7px;
 		max-width: 60%;
-		min-height: 30px;
+		min-height: 20px;
 		background-color: #fff;
 		border-radius: 0.4em;
 		@extend %massage-text;
