@@ -31,7 +31,7 @@ export default class Form extends Block {
 				self.checkValidity()
 			})
 		})
-		this.buttonSubmit = this._element.querySelector('.form__btn')
+		this.buttonSubmit = this._element.getElementsByTagName('button')[0]
 		if (this.buttonSubmit) {
 			this.buttonSubmit.classList.add('form__btn-noactiv')
 		}

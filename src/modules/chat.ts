@@ -4,8 +4,11 @@ import Companion from '../components/chat/Companion'
 import Link from '../components/Link'
 import TalkUser from '../components/chat/TalkUser'
 import Massage from '../components/chat/Massage'
-import ReplyForm from '../components/chat/ReplyForm'
+import Form from '../components/Form'
+import FormField from '../components/FormField'
 import { chatTmp } from '../templates/chat/chat.tmp'
+import { replyFormFiemlTmp } from '../templates/chat/replyFormField.tmp'
+import { replyForm } from '../templates/chat/replyForm.tmp'
 import { profileLinkTmp } from '../templates/chat/profileLink.tmp'
 
 class Chat extends Block {
@@ -70,10 +73,20 @@ export const chat = new Chat({
 	talkUser: new TalkUser({
 		name: 'djon',
 	}),
-	replyForm: new ReplyForm({
-		name: 'Djon',
-		lastMassage: 'Hi',
-		time: '10:10',
-		notReadMassage: '5',
+	replyForm: new Form({
+		inputSelector: '.talk__input',
+		onSubmit: () => {},
+		tmpl: replyForm,
+		fields: [
+			new FormField({
+				inputSelector: '.talk__input',
+				tmpl: replyFormFiemlTmp,
+				name: 'message',
+				errorText: '',
+				regx: '',
+				inputName: 'message',
+			}),
+		],
+		buttonText: '',
 	}),
 })
