@@ -1,0 +1,15 @@
+@import './blocks/_variables.scss';
+@import 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap';
+@import './vendor/normalize.css';
+@import './blocks/popup.scss';
+@import './blocks/entry.scss';
+@import './blocks/form.scss';
+@import './blocks/chat.scss';
+@import './blocks/companion.scss';
+@import './blocks/talk.scss';
+@import './blocks/profile.scss';
+@import './blocks/errPage.scss';
+
+body {
+	font-family: 'Inter', sans-serif;
+}
