@@ -1,5 +1,5 @@
 export const chatTmp: string = `<div class="chat">
-  <div class="chat__menue">
+  <div class="chat__menu">
     <div class="chat__bar">
       {{{link}}}
       <div class="chat__input-container">

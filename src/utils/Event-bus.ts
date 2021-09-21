@@ -1,4 +1,5 @@
 export default class EventBus {
+	listeners: {}
 	constructor() {
 		this.listeners = {}
 	}

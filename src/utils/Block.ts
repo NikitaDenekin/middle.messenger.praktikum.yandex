@@ -1,4 +1,4 @@
-import EventBus from './event-bus.js'
+import EventBus from './event-bus'
 import Handlebars from 'handlebars/dist/handlebars'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -36,7 +36,6 @@ export default class Block {
 		buttonEditPassword?
 		onEditInfo?
 		onEditPasssword?
-		// attributes?: Record<string, string>
 	}
 	eventBus: () => any
 	tmpl?: string
@@ -51,8 +50,6 @@ export default class Block {
 
 		this.props = this._makePropsProxy(props)
 		this.tmpl = this.props.tmpl
-
-		// this.childs = this.props.childs || []
 
 		this.eventBus = () => eventBus
 
@@ -70,18 +67,7 @@ export default class Block {
 	_createResources() {
 		const { tagName } = this._meta
 		this._element = this._createDocumentElement(tagName)
-		// this._addAttributes()
 	}
-
-	// _addAttributes() {
-	// 	if (!Object.keys(this.attributes).length === 0) {
-	// 		const attributesArr = Object.entries(this.attributes)
-	// 		attributesArr.forEach(([key, value]) => {
-	// 			this._element.setAttribute(key, value)
-	// 		})
-	// 	}
-	// 	return
-	// }
 
 	init() {
 		this._createResources()
@@ -150,7 +136,6 @@ export default class Block {
 	}
 
 	_makePropsProxy(props) {
-		const self = this
 		const proxyProps = new Proxy(props, {
 			get(target, prop) {
 				if (prop[0] === '_') {
@@ -160,13 +145,13 @@ export default class Block {
 				const value = target[prop]
 				return typeof value === 'function' ? value.bind(target) : value
 			},
-			set(target, prop, value) {
+			set: (target, prop, value) => {
 				if (prop[0] === '_') {
 					throw new Error('Нет прав')
 				}
 				const oldProps = Object.assign({ ...target })
 				target[prop] = value
-				self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target)
+				this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldProps, target)
 				return true
 			},
 			deleteProperty(target, prop) {
@@ -178,15 +163,14 @@ export default class Block {
 	}
 
 	_createDocumentElement(tagName) {
-		// Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
 		return document.createElement(tagName)
 	}
 
-	show() {
-		this._element.style.display = 'block'
+	show(hideClass) {
+		this._element.classList.add(hideClass)
 	}
 
-	hide() {
-		this._element.style.display = 'none'
+	hide(hideClass) {
+		this._element.classList.remove(hideClass)
 	}
 }

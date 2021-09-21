@@ -4,17 +4,20 @@
 	grid-template-columns: 320px 1fr;
 	grid-template-rows: 100%;
 	grid-template-areas: 'a b';
-	&__menue {
+
+	&__menu {
 		padding: 0 10px;
 		grid-area: a;
 		box-sizing: border-box;
 	}
+
 	&__bar {
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
 		align-items: center;
 	}
+
 	&__btn-profile {
 		text-decoration: none;
 		margin: 0 10px 0 auto;
@@ -32,8 +35,10 @@
 			color: $ui-elements-hover-color-medium;
 		}
 	}
+
 	&__input-container {
 	}
+
 	&__input-search {
 		padding: 0 0 0 10px;
 		margin: 0 0 14px 0;
@@ -43,7 +48,7 @@
 		outline: none;
 		border-radius: 5px;
 		background-color: $ui-elements-color-main;
-		color: #000;
+		color: $input-text-color;
 		transition: 0.4s;
 		box-sizing: border-box;
 
@@ -51,11 +56,13 @@
 			color: #fff;
 			text-align: center;
 		}
+
 		&:focus {
 			box-shadow: 0 0 0 1pt $ui-elements-color-main;
 			background-color: white;
 		}
 	}
+
 	&__list {
 		margin: 0;
 		padding: 0;

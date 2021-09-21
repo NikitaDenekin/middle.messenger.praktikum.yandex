@@ -47,10 +47,12 @@ $font-color-main: #000;
 		line-height: 11px;
 		color: #f12711c2;
 		transition: 0.2s;
+
 		&:hover {
 			color: #f12711ea;
 			transform: scale(1.01);
 		}
+
 		&:active {
 			transform: scale(0.95);
 		}
