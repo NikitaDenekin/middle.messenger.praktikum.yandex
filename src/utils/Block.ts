@@ -18,13 +18,13 @@ export default class Block {
 		tmpl?: string
 		user?: string
 		classList?: string[]
-		regx?: any
+		regx?: RegExp
 		fields?: any
 		onValidate?
 		link?: any
 		onRenderPage?: any
 		onSubmit?: any
-		form?: any
+		form?
 		companions?
 		talkMassages?
 		profileBar?
