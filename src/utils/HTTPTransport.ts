@@ -61,19 +61,13 @@ class HTTPTransport {
 				resolve(xhr)
 			}
 
-			function errHeandler() {
+			function errHandler() {
 				reject(xhr)
 			}
 
-			xhr.onabort = function () {
-				errHeandler()
-			}
-			xhr.onerror = function () {
-				errHeandler()
-			}
-			xhr.ontimeout = function () {
-				errHeandler()
-			}
+			xhr.onabort = errHandler
+			xhr.onerror = errHandler
+			xhr.ontimeout = errHandler
 			xhr.timeout = timeout
 
 			if (method === METHOD.GET && !data) {
@@ -90,50 +84,18 @@ const postPATH = 'https://jsonplaceholder.typicode.com/posts'
 const putPATH = 'https://jsonplaceholder.typicode.com/posts/1'
 const delPATH = 'https://jsonplaceholder.typicode.com/posts/1'
 
-// const api = new HTTPTransport()
-
 function fetchWithRetry(url, options) {
 	let count = 0
 	function go() {
-		return fetch(url, options)
-			.then(res => {
-				return res
-			})
-			.catch(err => {
-				if (count < options.retries) {
-					count++
-					go()
-				} else {
-					throw err
-				}
-			})
+		return fetch(url, options).catch(err => {
+			if (count < options.retries) {
+				count++
+				go()
+			} else {
+				throw err
+			}
+		})
 	}
 
 	return go()
 }
-
-// api.get(getPATH).then(res => console.log(res))
-// api.delete(delPATH, { method: 'DELETE' }).then(res => console.log(res))
-
-// api
-// 	.post(postPATH, {
-// 		data: {
-// 			title: 'foo',
-// 			body: 'bar',
-// 			userId: 931214214,
-// 		},
-// 		method: 'POST',
-// 	})
-// 	.then(res => console.log(res.response))
-
-// api
-// 	.put(putPATH, {
-// 		data: {
-// 			id: 1,
-// 			title: 'foo',
-// 			body: 'bar',
-// 			userId: 1,
-// 		},
-// 		method: 'PUT',
-// 	})
-// 	.then(res => console.log(res.response))
