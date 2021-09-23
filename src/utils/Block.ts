@@ -1,4 +1,4 @@
-import EventBus from './event-bus'
+import EventBus from './Event-bus'
 import Handlebars from 'handlebars/dist/handlebars'
 import { v4 as uuidv4 } from 'uuid'
 
