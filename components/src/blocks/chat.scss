@@ -1,0 +1,146 @@
+.chat {
+	height: 100vh;
+	display: grid;
+	grid-template-columns: 320px 1fr;
+	grid-template-rows: 100%;
+	grid-template-areas: 'a b';
+
+	&__menu {
+		padding: 0 10px;
+		grid-area: a;
+		box-sizing: border-box;
+	}
+
+	&__bar {
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+	}
+
+	&__messages{
+		margin: 60px 0 0 0;
+		padding: 0 10%;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: flex-start;
+		box-sizing: border-box;
+	}
+
+	&__message{
+		margin: 0 0 15px 0;
+		padding: 5px;
+		background-color: #ffffff;
+		border-radius: 7px;
+
+		&-right{
+			margin-left: auto;
+		}
+	}
+
+	&__btn-profile {
+		text-decoration: none;
+		margin: 0 10px 0 auto;
+		padding: 23px 0;
+		border: none;
+		outline: none;
+		background-color: rgba(255, 255, 255, 0);
+		font-weight: 500;
+		font-size: 12px;
+		line-height: 12px;
+		color: #999999;
+		cursor: pointer;
+		transition: 0.4s;
+		&:hover {
+			color: $ui-elements-hover-color-medium;
+		}
+	}
+
+	&__input {
+		position: relative;
+		margin: 0 0 14px 0;
+		visibility: visible;
+		opacity: 1;
+
+		&-hidden{
+			margin: 0;
+			height: 0;
+			visibility: hidden;
+			opacity: 0;
+		}
+
+		&:focus-within button{
+			visibility: visible;
+			opacity: 1;
+		}
+
+		&-btn{
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			top: calc(50% - 12px);
+			right: 4px;
+			width: 24px;
+			height: 24px;
+			background-image: url("./images/icon/close.svg");
+			outline: none;
+			border: none;
+			background-color: rgba(255, 255, 255, 0);
+			background-size: cover;
+			background-position: center center;
+			background-repeat: no-repeat;
+			visibility: hidden;
+			opacity: 0;
+			transition: 0.6s;
+			cursor: pointer;
+
+			&-active{
+				background-image: url("./images/icon/check.svg");
+			}
+
+			&:focus{
+				width: 0;
+				height: 0;
+			}
+		}
+
+
+		&-search {
+			padding: 0 0 0 10px;
+			width: 290px;
+			height: 32px;
+			border: none;
+			outline: none;
+			border-radius: 5px;
+			background-color: $ui-elements-color-main;
+			color: rgba(255, 255, 255, 0);
+
+			transition: 0.4s;
+			box-sizing: border-box;
+
+			&::placeholder {
+				color: #fff;
+				text-align: center;
+			}
+
+			&:focus {
+				box-shadow: 0 0 0 1pt $ui-elements-color-main;
+				background-color: white;
+				color: $input-text-color;
+			}
+		}
+	}
+
+	&__list {
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: start;
+		align-items: center;
+		list-style-type: none;
+	}
+}
