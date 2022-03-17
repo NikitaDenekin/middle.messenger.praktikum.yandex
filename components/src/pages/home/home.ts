@@ -49,11 +49,15 @@ export class HomePage extends Block {
     componentDidMount() {
         if (!this.props.user) {
             this.props.router.go('/login')
+            return
         }
         this.getChats()
     }
 
     componentDidUpdate() {
+        if (!this.props.user) {
+            this.props.router.go('/login')
+        }
         return true
     }
 

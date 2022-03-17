@@ -6,17 +6,11 @@ import {regxValidate} from '../../utils/regxValidate'
 
 export class SignupPage extends Block {
     private data: any;
+
     protected getStateFromProps() {
         this.state = {
             onSignUp: () => {
                 this.onSignUp()
-                // const data: any = {};
-                //
-                // Object.entries(this.refs as { [key: string]: HTMLInputElement }).forEach(([key, input]) => {
-                //     data[key] = input.value;
-                // });
-                //
-                // await AuthController.signup(data);
             },
             setData: (name: string, value: string) => {
                 this.setData(name, value)
@@ -46,25 +40,23 @@ export class SignupPage extends Block {
         }
     }
 
-    async onSignUp (){
+    async onSignUp() {
         let valideData = false
         Object.entries(this.data).forEach(([key, value]) => {
-            if(!value){
+            if (!value) {
                 valideData = false
-            }
-            else {
+            } else {
                 valideData = true
             }
         })
-        if(this.data.password !== this.data.passwordSecond || !valideData){
+        if (this.data.password !== this.data.passwordSecond || !valideData) {
             this.showError()
-        }
-        else {
+        } else {
             await AuthController.signup(this.data)
         }
     }
 
-    showError(){
+    showError() {
         console.log('error')
     }
 
@@ -108,12 +100,8 @@ export class SignupPage extends Block {
                                  className="form__input entry__input"
                                  setData=setData
                                  validate=onValidate.password}}}
-
-                        <!--            {{#if user.error }}-->
-                    <!--                <span style="color: red">{{user.error.reason}}</span><br/>-->
-                        <!--            {{/if}}-->
-                    {{{Button text="Зарегистрироваться" onActive=validData onClick=onSignUp}}} {{{Link text="Войти" className="entry__btn"
-                                                                                    to="/login"}}}
+                    {{{Button text="Зарегистрироваться" onActive=validData onClick=onSignUp}}}
+                    {{{Link text="Войти" className="entry__btn" to="/login"}}}
                 </div>
             </div>`;
     }

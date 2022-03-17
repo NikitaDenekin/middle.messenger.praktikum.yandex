@@ -115,6 +115,7 @@ export class ProfilePage extends Block {
     }
     logOut() {
         AuthController.logout()
+        this.props.router.go(' /')
     }
 
     btnBackClick() {
