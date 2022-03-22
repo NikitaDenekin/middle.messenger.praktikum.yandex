@@ -1,4 +1,7 @@
-/node_modules
-/dist
-/.idea
-/.parcel-cache
+**/node_modules
+node_modules
+**/dist
+**/.cache
+**/yarn-error.log
+
+.idea/
