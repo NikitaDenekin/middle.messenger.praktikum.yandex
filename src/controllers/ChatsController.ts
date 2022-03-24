@@ -55,8 +55,8 @@ class ChatsController {
 
   async createChat(data: newChatData){
       try {
-          await this.api.createChat(data)
-          await this.getChats()
+         await this.api.createChat(data)
+          return
       } catch (e) {
           store.dispatch(setError(e as { reason: string }));
       }

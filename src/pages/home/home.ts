@@ -9,6 +9,8 @@ export class HomePage extends Block {
             chats: [],
             createChat: async (data: any) => {
                 await ChatsController.createChat(data)
+                await this.getChats()
+                return
             },
             onSendMessage: ()=> {
 
@@ -24,12 +26,7 @@ export class HomePage extends Block {
     }
 
 
-    async createChat(data: any){
-            await ChatsController.createChat(data)
-    }
-
     async getChats() {
-
         const chatsList: [] = await ChatsController.getChats()
         for( const chat of chatsList){
             const controller = new MessageControllers()
@@ -63,10 +60,6 @@ export class HomePage extends Block {
         this.state.messageFieldVisible = true
         this.state.currentChat = data.messages
         this.state.onSendMessage = data.onSendMessage
-    }
-
-    onSendMessage(){
-
     }
 
 

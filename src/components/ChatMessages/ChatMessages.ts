@@ -28,7 +28,7 @@ export class ChatMessages extends Block {
 
     componentDidMount() {
         this.message = ''
-        if(this.state.chat.length > 0){
+        if(this.props.messages){
             this.state.chat = [...this.props.messages].reverse()
         }
         this.field = this.element?.querySelector('.talk__reply')

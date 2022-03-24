@@ -13,7 +13,6 @@ export default class MessageController {
  async startSocket (userId: string, chatId: string, token: string) {
         try{
             await this.api.startSocket(userId, chatId, token)
-
         } catch (e) {
             store.dispatch(setError(e as { reason: string }));
         }
