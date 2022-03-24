@@ -3,14 +3,15 @@ import Block from "../../utils/Block";
 interface ChatMessagesProps {
     messages: [];
     onSendMessage: () => void;
+    onVisible: boolean
 }
 
 export class ChatMessages extends Block {
     private message: any;
     constructor({
-                    messages, onSendMessage
+                    messages, onSendMessage, onVisible
                 }: ChatMessagesProps) {
-        super({messages, onSendMessage});
+        super({messages, onSendMessage, onVisible});
     }
 
     protected getStateFromProps() {
@@ -27,9 +28,11 @@ export class ChatMessages extends Block {
 
     componentDidMount() {
         this.message = ''
-        this.state.chat = [...this.props.messages].reverse()
+        if(this.state.chat.length > 0){
+            this.state.chat = [...this.props.messages].reverse()
+        }
         this.field = this.element?.querySelector('.talk__reply')
-        if(this.props.messages.length !== 0){
+        if(this.props.onVisible){
             this.field.classList.remove('hidden')
         }
     }

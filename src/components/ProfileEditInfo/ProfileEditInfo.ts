@@ -51,7 +51,7 @@ export class ProfileEditInfo extends Block {
                                     value=data.first_name setData=setData}}}
                 {{{ProfileFormField title="Фамилия" name="second_name" validate=validate.second_name
                                     value=data.second_name setData=setData}}}
-                {{{ProfileFormField title="Имя в чате" name="second_name" validate=validate.second_name
+                {{{ProfileFormField title="Имя в чате" name="display_name" validate=validate.login
                                     value=data.display_name setData=setData}}}
                 {{{ProfileFormField title="Телефон" name="phone" validate=validate.phone
                                     value=data.phone setData=setData}}}

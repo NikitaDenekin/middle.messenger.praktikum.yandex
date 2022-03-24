@@ -1,7 +1,6 @@
 import Block from '../../utils/Block';
 import ChatsController from "../../controllers/ChatsController";
 import MessageControllers from "../../controllers/MessageController";
-import {render} from "sass";
 
 export class HomePage extends Block {
 
@@ -19,9 +18,7 @@ export class HomePage extends Block {
                 this.setCurrentUser(data)
             },
             currentUser: {},
-            setMessage: () => {
-                this.setMessage()
-            }
+            messageFieldVisible: false,
 
         }
     }
@@ -29,7 +26,6 @@ export class HomePage extends Block {
 
     async createChat(data: any){
             await ChatsController.createChat(data)
-            console.log(data)
     }
 
     async getChats() {
@@ -64,6 +60,7 @@ export class HomePage extends Block {
 
     setCurrentUser(data: any) {
         this.state.currentUser = data
+        this.state.messageFieldVisible = true
         this.state.currentChat = data.messages
         this.state.onSendMessage = data.onSendMessage
     }
@@ -92,7 +89,7 @@ export class HomePage extends Block {
                 </div>
                 <div class="chat__talk talk">
                     {{{TalkUser data=currentUser}}}
-                    {{{ChatMessages messages=currentChat onSendMessage=onSendMessage}}}
+                    {{{ChatMessages messages=currentChat onSendMessage=onSendMessage onVisible=messageFieldVisible}}}
                 </div>
             </div>`;
     }

@@ -47,6 +47,7 @@ class ChatsController {
       try {
           await this.api.deleteUserFromChat(data);
           await this.getChats()
+          return
       } catch (e) {
           store.dispatch(setError(e as { reason: string }));
       }
@@ -64,7 +65,7 @@ class ChatsController {
     async addUserToChat(data: newUserData){
         try {
             await this.api.addUserToChat(data)
-            // await this.getChats()
+            return
         } catch (e) {
             store.dispatch(setError(e as { reason: string }));
         }

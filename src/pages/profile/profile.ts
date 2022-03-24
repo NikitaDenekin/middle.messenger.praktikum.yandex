@@ -144,14 +144,6 @@ export class ProfilePage extends Block {
             <div class="profile">
                 {{{Button className="profile__btn-back" onClick=onBack}}}
                 {{{ProfileAvatar avatarUrl=profileData.avatar onSubmit=onEditAvatar}}}
-<!--                <div class="profile__preview">-->
-<!--                    <div class="profile__preview-avatar">-->
-<!--                        <input class="profile__preview-load" type="file" id="file-uploader">-->
-<!--                        <img src="https://ya-praktikum.tech/api/v2/Resources{{user.avatar}}" alt="avatar"-->
-<!--                             class="profile__preview-img"></img>-->
-<!--                    </div>-->
-<!--                    <div class="profile__preview-name">Иван</div>-->
-<!--                </div>-->
                 {{{ProfileInfo data=profileData condition=condition}}}
                 {{{ProfileEditInfo data=profileData condition=condition setData=setData onSubmit=onEditInfo}}}
                 {{{ProfileEditPassword data=profileData condition=condition setData=setData onSubmit=onEditPassword}}}
