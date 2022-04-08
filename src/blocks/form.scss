@@ -59,23 +59,28 @@ $font-color-title: #999;
 		color: #fff;
 		cursor: pointer;
 		transition: 0.4s;
+
 		&-signup {
 			margin: 80px 0 0 0;
 		}
+
 		&-signin {
 			margin: 47px 0 0 0;
 		}
+
 		&:hover {
 			background-color: $ui-elements-hover-color;
 		}
+
 		&:active {
 			transform: scale(0.95);
 		}
+
 		&-noactiv {
-			background-color: $ui-elements-color-main;
+			background-color: rgba(187, 123, 123, 0.4);
 			cursor: auto;
 			&:hover {
-				background-color: $ui-elements-color-main;
+				background-color: rgba(187, 123, 123, 0.4);
 			}
 			&:active {
 				transform: scale(1);

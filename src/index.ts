@@ -1,61 +1,29 @@
-import './style.scss'
-import { login } from './modules/login'
-import { signin } from './modules/signin'
-import { chat } from './modules/chat'
-import {
-	profile,
-	profileEditPassword,
-	profileEditInfo,
-} from './modules/profile'
+import "./style.scss"
 
-const root = document.querySelector('.main')
+import registerComponent from "./utils/registerComponent"
+import Router from "./utils/Router"
+import HomePage from "./pages/home"
+import LoginPage from "./pages/login"
+import SignupPage from "./pages/signup"
+import Block from "./utils/Block"
+import ProfilePage from "./pages/profile"
+import AuthController from "./controllers/AuthController"
 
-function render(block) {
-	root.innerHTML = ''
-	root.appendChild(block.getContent())
+const components = require("./components/**/index.ts") as {
+  [key: string]: { default: typeof Block }
 }
 
-render(login)
-
-login.setProps({
-	onRenderPage: () => render(signin),
-	onSubmit: () => render(chat),
-})
-signin.setProps({
-	onRenderPage: () => {
-		render(login)
-	},
+Object.values(components).forEach((component) => {
+  registerComponent(component.default)
 })
 
-chat.setProps({
-	onRenderPage: () => {
-		render(profile)
-	},
-})
+AuthController.fetchUser().then(() => {
+  const router = new Router()
 
-profile.setProps({
-	onRenderPage: () => {
-		render(chat)
-	},
-	onEditInfo: () => {
-		render(profileEditInfo)
-	},
-	onEditPasssword: () => {
-		render(profileEditPassword)
-	},
-	onExit: () => {
-		render(login)
-	},
-})
-
-profileEditInfo.setProps({
-	onRenderPage: () => {
-		render(profile)
-	},
-})
-
-profileEditPassword.setProps({
-	onRenderPage: () => {
-		render(profile)
-	},
+  router
+    .use("/", HomePage)
+    .use("/login", LoginPage)
+    .use("/signup", SignupPage)
+    .use("/profile", ProfilePage)
+    .start()
 })
