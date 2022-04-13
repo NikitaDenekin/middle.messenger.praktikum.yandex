@@ -9,6 +9,12 @@
     "dev": "./node_modules/webpack/bin/webpack.js --wach",
     "build": "./node_modules/webpack/bin/webpack.js"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm-run-all test lint:all",
+      "pre-push": "npm run other command"
+    }
+  },
   "devDependencies": {
     "@babel/core": "7.17.9",
     "@babel/preset-env": "7.16.11",
@@ -25,6 +31,7 @@
     "css-loader": "6.7.1",
     "express": "4.17.1",
     "html-webpack-plugin": "5.5.0",
+    "husky": "^7.0.4",
     "jsdom": "19.0.0",
     "mocha": "9.1.2",
     "parcel-plugin-handlebars-precompile": "1.0.2",
