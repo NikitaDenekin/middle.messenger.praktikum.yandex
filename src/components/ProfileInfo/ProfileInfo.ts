@@ -1,27 +1,27 @@
-import Block from "../../utils/Block";
+import Block from "../../utils/Block"
 
 interface InputProps {
-    data: {};
-    condition: string;
+  data: {}
+  condition: string
 }
 
 export class ProfileInfo extends Block {
-    constructor({data, condition}: InputProps) {
-        super({data, condition});
-    }
+  static componentName = "ProfileInfo"
+  constructor({ data, condition }: InputProps) {
+    super({ data, condition })
+  }
 
-    componentDidMount() {
-        if(this.props.condition === 'info'){
-            this.element?.classList.remove('profile__info-hidden')
-        }
-        else {
-            this.element?.classList.add('profile__info-hidden')
-        }
+  componentDidMount() {
+    if (this.props.condition === "info") {
+      this.element?.classList.remove("profile__info-hidden")
+    } else {
+      this.element?.classList.add("profile__info-hidden")
     }
+  }
 
-    protected render(): string {
-        // language=hbs
-        return `
+  protected render(): string {
+    // language=hbs
+    return `
             <div class="profile__info">
                 <dl class="profile__item">
                     <dt class="profile__item-name">Почта</dt>
@@ -47,7 +47,6 @@ export class ProfileInfo extends Block {
                     <dt class="profile__item-name">Телефон</dt>
                     <dd class="profile__item-value">{{data.phone}}</dd>
                 </dl>
-            </div>`;
-    }
+            </div>`
+  }
 }
-

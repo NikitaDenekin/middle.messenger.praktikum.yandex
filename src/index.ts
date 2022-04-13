@@ -9,12 +9,18 @@ import Block from "./utils/Block"
 import ProfilePage from "./pages/profile"
 import AuthController from "./controllers/AuthController"
 
-const components = require("./components/**/index.ts") as {
-  [key: string]: { default: typeof Block }
+const components: Array<typeof Block> = []
+
+function importAll(r: any) {
+  r.keys().forEach((key: string) => {
+    components.push(r(key).default as typeof Block)
+  })
 }
 
+importAll(require.context("./components/", true, /index\.ts$/))
+
 Object.values(components).forEach((component) => {
-  registerComponent(component.default)
+  registerComponent(component)
 })
 
 AuthController.fetchUser().then(() => {

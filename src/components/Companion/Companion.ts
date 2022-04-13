@@ -1,32 +1,29 @@
-import Block from "../../utils/Block";
+import Block from "../../utils/Block"
 
 interface InputProps {
-    onSetUser: () => void;
-    data: {}
+  onSetUser: () => void
+  data: {}
 }
 
 export class Companion extends Block {
-    constructor({ data, onSetUser
-                }: InputProps) {
-        super({ data, onSetUser});
-    }
+  static componentName = "Companion"
+  constructor({ data, onSetUser }: InputProps) {
+    super({ data, onSetUser })
+  }
 
-    protected getStateFromProps() {
-        this.state = {
+  protected getStateFromProps() {
+    this.state = {}
+  }
 
-        }
-    }
+  componentDidMount() {
+    this.element?.addEventListener("click", () => {
+      this.props.onSetUser(this.props.data)
+    })
+  }
 
-    componentDidMount() {
-        this.element?.addEventListener('click', ()=> {
-            this.props.onSetUser(this.props.data)
-        })
-
-    }
-
-    protected render(): string {
-        // language=hbs
-        return `
+  protected render(): string {
+    // language=hbs
+    return `
             <li class="chat__companion companion">
                 <div class="companion__avatar"></div>
                 {{#if data.last_message}}
@@ -37,6 +34,6 @@ export class Companion extends Block {
                     <p class="companion__last-massage">Здесь пока ни чего нет</p>
                 {{/if}}
                 
-            </li>`;
-    }
+            </li>`
+  }
 }

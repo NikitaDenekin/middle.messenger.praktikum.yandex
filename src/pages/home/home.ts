@@ -1,71 +1,64 @@
-import Block from '../../utils/Block';
-import ChatsController from "../../controllers/ChatsController";
-import MessageControllers from "../../controllers/MessageController";
+import Block from "../../utils/Block"
+import ChatsController from "../../controllers/ChatsController"
+import MessageAPI from "../../api/MessageAPI"
 
 export class HomePage extends Block {
-
-    protected getStateFromProps() {
-        this.state = {
-            chats: [],
-            createChat: async (data: any) => {
-                await ChatsController.createChat(data)
-                await this.getChats()
-                return
-            },
-            onSendMessage: ()=> {
-
-            },
-            currentChat: [],
-            companionOnClick: (data: {}) => {
-                this.setCurrentUser(data)
-            },
-            currentUser: {},
-            messageFieldVisible: false,
-
-        }
+  static componentName = "HomePage"
+  protected getStateFromProps() {
+    this.state = {
+      chats: [],
+      createChat: async (data: any) => {
+        await ChatsController.createChat(data)
+        await this.getChats()
+        return
+      },
+      onSendMessage: () => {},
+      currentChat: [],
+      companionOnClick: (data: {}) => {
+        this.setCurrentUser(data)
+      },
+      currentUser: {},
+      messageFieldVisible: false,
     }
+  }
 
-
-    async getChats() {
-        const chatsList: [] = await ChatsController.getChats()
-        for( const chat of chatsList){
-            const controller = new MessageControllers()
-            await controller.startSocket(this.props.user.id, chat.id, chat.token)
-            chat.onSendMessage = (message: string) => {
-                controller.sendMessage(message)
-            }
-        }
-        this.state.chats = chatsList
+  async getChats() {
+    const chatsList: any = await ChatsController.getChats()
+    for (const chat of chatsList) {
+      const controller = new MessageAPI(this.props.user.id, chat.id, chat.token)
+      await controller.startSocket(chat.id)
+      chat.onSendMessage = (message: string) => {
+        controller.sendMessage(message)
+      }
     }
+    this.state.chats = chatsList
+  }
 
-
-    componentDidMount() {
-        if (!this.props.user) {
-            this.props.router.go('/login')
-            return
-        }
-        this.getChats()
+  componentDidMount() {
+    if (!this.props.user) {
+      this.props.router.go("/login")
+      return
     }
+    this.getChats()
+  }
 
-    componentDidUpdate() {
-        if (!this.props.user) {
-            this.props.router.go('/login')
-        }
-        return true
+  componentDidUpdate() {
+    if (!this.props.user) {
+      this.props.router.go("/login")
     }
+    return true
+  }
 
+  setCurrentUser(data: any) {
+    this.state.currentUser = data
+    this.state.messageFieldVisible = true
+    this.state.currentChat = data.messages
+    this.state.onSendMessage = data.onSendMessage
+  }
 
-    setCurrentUser(data: any) {
-        this.state.currentUser = data
-        this.state.messageFieldVisible = true
-        this.state.currentChat = data.messages
-        this.state.onSendMessage = data.onSendMessage
-    }
-
-
-    render() {
-        // language=hbs
-        return `
+  render() {
+    // language=hbs
+    return `
             <div class="chat">
                 <div class="chat__menu">
                     <div class="chat__bar">
@@ -84,6 +77,6 @@ export class HomePage extends Block {
                     {{{TalkUser data=currentUser}}}
                     {{{ChatMessages messages=currentChat onSendMessage=onSendMessage onVisible=messageFieldVisible}}}
                 </div>
-            </div>`;
-    }
+            </div>`
+  }
 }

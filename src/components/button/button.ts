@@ -1,27 +1,27 @@
-import Block from '../../utils/Block';
+import Block from "../../utils/Block"
 
 interface ButtonProps {
-    text: string;
-    className: string;
-    onClick: () => void;
+  text: string
+  className: string
+  onClick: () => void
 }
 
 export class Button extends Block {
-    constructor({text, className, onClick}: ButtonProps) {
-        super({text, className, events: {click: onClick}});
-    }
+  static componentName = "Button"
+  constructor({ text, className, onClick }: ButtonProps) {
+    super({ text, className, events: { click: onClick } })
+  }
 
-    componentDidMount() {
-    }
+  componentDidMount() {}
 
-    protected render(): string {
-        // language=hbs
-        return `{{#if className}}
+  protected render(): string {
+    // language=hbs
+    return `{{#if className}}
             <button class={{className}} type="button">{{text}}</button>
         {{else}}
             <button class="form__btn form__btn-signup" type="button">{{text}}</button>
         {{/if}}
 
         `
-    }
+  }
 }

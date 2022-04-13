@@ -1,54 +1,54 @@
-import Block from "../../utils/Block";
+import Block from "../../utils/Block"
 
 interface ChatMessagesProps {
-    messages: [];
-    onSendMessage: () => void;
-    onVisible: boolean
+  messages: []
+  onSendMessage: () => void
+  onVisible: boolean
 }
 
 export class ChatMessages extends Block {
-    private message: any;
-    constructor({
-                    messages, onSendMessage, onVisible
-                }: ChatMessagesProps) {
-        super({messages, onSendMessage, onVisible});
-    }
+  static componentName = "ChatMessages"
+  private message: any
+  field: any
+  constructor({ messages, onSendMessage, onVisible }: ChatMessagesProps) {
+    super({ messages, onSendMessage, onVisible })
+  }
 
-    protected getStateFromProps() {
-        this.state = {
-            onSend: ()=> {
-                this.sendMessage()
-            },
-            onChange: () => {
-                this.onInputChange()
-            },
-            chat: []
-        }
+  protected getStateFromProps() {
+    this.state = {
+      onSend: () => {
+        this.sendMessage()
+      },
+      onChange: () => {
+        this.onInputChange()
+      },
+      chat: [],
     }
+  }
 
-    componentDidMount() {
-        this.message = ''
-        if(this.props.messages){
-            this.state.chat = [...this.props.messages].reverse()
-        }
-        this.field = this.element?.querySelector('.talk__reply')
-        if(this.props.onVisible){
-            this.field.classList.remove('hidden')
-        }
+  componentDidMount() {
+    this.message = ""
+    if (this.props.messages) {
+      this.state.chat = [...this.props.messages].reverse()
     }
-
-    sendMessage(){
-        this.props.onSendMessage(this.message)
-        this.refs.input.value = ''
+    this.field = this.element?.querySelector(".talk__reply")
+    if (this.props.onVisible) {
+      this.field.classList.remove("hidden")
     }
+  }
 
-    onInputChange(){
-        this.message = this.refs.input.value
-    }
+  sendMessage() {
+    this.props.onSendMessage(this.message)
+    this.refs.input.value = ""
+  }
 
-    protected render(): string {
-        // language=hbs
-        return `
+  onInputChange() {
+    this.message = this.refs.input.value
+  }
+
+  protected render(): string {
+    // language=hbs
+    return `
             <div class="chat__messages">
                 {{#each chat}}
                     <p class="chat__message">{{this.content}}</p>
@@ -62,6 +62,6 @@ export class ChatMessages extends Block {
                     {{{Button className="talk__btn-submit" onClick=onSend}}}
                 </div>
             </div>        
-`;
-    }
+`
+  }
 }
